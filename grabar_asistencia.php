@@ -1,22 +1,16 @@
 <?php
-echo  $_GET['value'];
-
-?>
-<?php
 require("conexion.php");
 
     //consulta mysql para insertar los datos del empleados
-    $query = "SELECT * FROM asistencia_docente
-    where dni='".$_GET['value']."' and fechaMarcacion=".date('Y-m-d')."' ";
+    $query = "SELECT * FROM asistencia_docente where dni='".$_GET['value']."' and fechaMarcacion=CURDATE();";
     echo $query;
 // enviamos la consulta a MySQL
     $queEmp = mysqli_query($con,$query);
     $total = $queEmp->num_rows;
-    echo  "Total: ";
-    echo $total;
+  
+    echo $_GET['value'];
     if($total>0){
-        $update = "UPDATE asistencia_docente set HoraFin='".date('H:m:s'). "' 
-         where dni='".$_GET['value']."' and fechaMarcacion='".date('Y-m-d')."'";
+        $update = "UPDATE asistencia_docente set HoraFin= DATE_FORMAT(NOW( ), '%H:%i:%S' ) WHERE dni='".$_GET['value']."' and fechaMarcacion='".date('Y-m-d')."'";
         mysqli_query($con, $update);
         echo "$update): ".$update;
         if($update)
@@ -29,8 +23,7 @@ require("conexion.php");
         }
         ///header("Location: index.php");
     } else{
-        $insertar = "INSERT INTO asistencia_docente(dni,fechaMarcacion,HoraInicio)
-        VALUES ('".$_GET['value']. "','".date('Y-m-d')."','".date('H:m:s'). "')";
+      echo  $insertar = "INSERT INTO asistencia_docente(dni,fechaMarcacion,HoraInicio) VALUES(TRIM('".$_GET['value']."'),CURDATE(),DATE_FORMAT(NOW( ), '%H:%i:%S' ))";
         mysqli_query($con, $insertar);
         if($insertar)
         {            

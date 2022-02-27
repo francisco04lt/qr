@@ -1,3 +1,6 @@
+<?php
+
+?>
 <html>
 <head>
   <meta name="description" content="QR Code scanner" />
@@ -194,8 +197,41 @@ li a{
 <canvas id="qr-canvas" width="800" height="600"></canvas>
 <script type="text/javascript">load();</script>
 <script>
+    
    
 </script>
+<?
+
+  
+    ?>
+<table width="100%">
+    <?php
+    require("conexion.php");
+      $consulta="SELECT a.dni, a.fechaMarcacion, a.HoraInicio, a.HoraFin, d.apellidos, d.nombre from asistencia_docente a
+      INNER JOIN docente d ON a.dni= d.dni ORDER BY id desc LIMIT 1;  ";
+      $queEmp = mysqli_query($con,$consulta);
+      while($row = mysqli_fetch_array($queEmp)){
+          $dni=$row[0];
+          $apellido=$row[4];
+          $nombre=$row[5];
+          $fecha=$row[1];
+          $horaEntrada = $row[2];
+          $horaSalida= $row[3];
+      }
+    ?>
+     <tr>
+        <td>DNI: <?=$dni?></td>
+        <td>Nombre : <?=$apellido?> <?=$nombre?></td>
+     </tr>
+     <tr>
+        <td>Fecha: <?=$fecha?></td>
+        <td></td>
+     </tr>
+     <tr>
+        <td>Hora de Entrada : <?=$horaEntrada?></td>
+        <td>Hora de Salida : <?=$horaSalida?></td>
+     </tr>
+   </table>
 </body>
 
 </html>
