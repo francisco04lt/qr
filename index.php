@@ -167,17 +167,7 @@ li a{
 </td></tr>
 </table>
 <script>
-     if($("#result").val() !=''){
-        $.ajax({
-                url: "grabar_asistencia.php",
-                data: { value: $("#result").val() },
-                dataType:"html",
-                type: "POST",
-                success: function(data){
-                $('#div1').append(data);
-                }
-            });
-     }
+ 
 </script>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- webqr_2016 -->
@@ -208,8 +198,9 @@ li a{
     <?php
     require("conexion.php");
       $consulta="SELECT a.dni, a.fechaMarcacion, a.HoraInicio, a.HoraFin, d.apellidos, d.nombre from asistencia_docente a
-      INNER JOIN docente d ON a.dni= d.dni ORDER BY id desc LIMIT 1;  ";
+      INNER JOIN docente d ON a.dni= d.dni ORDER BY a.fechaMarcacion, a.HoraInicio desc LIMIT 1;  ";
       $queEmp = mysqli_query($con,$consulta);
+    
       while($row = mysqli_fetch_array($queEmp)){
           $dni=$row[0];
           $apellido=$row[4];
