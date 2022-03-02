@@ -14,9 +14,9 @@ $explode3= explode('</b>',  $explode2[1] );
     $total = $queEmp->num_rows;
   
     if($total>0){
-        $update = "UPDATE asistencia_docente set HoraFin= DATE_FORMAT(NOW( ), '%H:%i:%S' ) WHERE dni='".$explode3[0]."' and fechaMarcacion=CURDATE()";
+        $update = "UPDATE asistencia_docente set HoraFin= DATE_FORMAT(NOW(), '%H:%i:%S' ) WHERE dni='".$explode3[0]."' and fechaMarcacion=CURDATE()";
         mysqli_query($con, $update);
-        echo "$update): ".$update;
+        ////echo "$update): ".$update;
         if($update)
         {            
             echo "Asistencia Actualizado Correctamente";
@@ -29,17 +29,17 @@ $explode3= explode('</b>',  $explode2[1] );
         }
      
     } else{
-      echo  $insertar = "INSERT INTO asistencia_docente(dni,fechaMarcacion,HoraInicio) VALUES(TRIM('".$explode3[0]."'),CURDATE(),DATE_FORMAT(NOW( ), '%H:%i:%S' ))";
+       $insertar = "INSERT INTO asistencia_docente(dni,fechaMarcacion,HoraInicio) VALUES(TRIM('".$explode3[0]."'),CURDATE(),DATE_FORMAT(NOW(), '%H:%i:%S' ))";
         mysqli_query($con, $insertar);
         if($insertar)
         {            
             echo "Asistencia Guardado Correctamente";
-            header("Refresh:0; url=index.php");
+            header("Location: index.php");
         }
         else
         {
             echo "No se pudieron guardar los datos";
-            header("Refresh:0; url=index.php");
+            header("Location: index.php");
         }
      }
     

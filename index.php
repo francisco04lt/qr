@@ -136,6 +136,7 @@ li a{
 </head>
 
 <body>
+   
 <div id="main">
 <div id="header">
 <div style="position:relative;top:+20px;left:0px;"><g:plusone size="medium"></g:plusone></div>
@@ -152,7 +153,7 @@ li a{
 <tr><td colspan="2" align="center">
 <div id="outdiv">
 </div>
-<div id="div1"></div>
+<div id="div1" style="display:none;"></div>
 </td></tr>
 </table>
 </td>
@@ -166,9 +167,7 @@ li a{
 
 </td></tr>
 </table>
-<script>
- 
-</script>
+
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- webqr_2016 -->
 <ins class="adsbygoogle"
@@ -186,29 +185,31 @@ li a{
 </div>
 <canvas id="qr-canvas" width="800" height="600"></canvas>
 <script type="text/javascript">load();</script>
-<script>
-    
-   
-</script>
-<?
-
-  
-    ?>
-<table width="100%">
+<table width="100%" style="margin: -17rem 2rem 0rem 5rem;">
     <?php
     require("conexion.php");
       $consulta="SELECT a.dni, a.fechaMarcacion, a.HoraInicio, a.HoraFin, d.apellidos, d.nombre from asistencia_docente a
       INNER JOIN docente d ON a.dni= d.dni ORDER BY a.fechaMarcacion, a.HoraInicio desc LIMIT 1;  ";
       $queEmp = mysqli_query($con,$consulta);
-    
-      while($row = mysqli_fetch_array($queEmp)){
-          $dni=$row[0];
-          $apellido=$row[4];
-          $nombre=$row[5];
-          $fecha=$row[1];
-          $horaEntrada = $row[2];
-          $horaSalida= $row[3];
+      $total = $queEmp->num_rows;
+      if($total > 0){
+        while($row = mysqli_fetch_array($queEmp)){
+            $dni=$row[0];
+            $apellido=$row[4];
+            $nombre=$row[5];
+            $fecha=$row[1];
+            $horaEntrada = $row[2];
+            $horaSalida= $row[3];
+        }
+      } else{
+        $dni='';
+        $apellido='';
+        $nombre='';
+        $fecha='';
+        $horaEntrada = '';
+        $horaSalida= '';
       }
+     
     ?>
      <tr>
         <td>DNI: <?=$dni?></td>
@@ -223,6 +224,8 @@ li a{
         <td>Hora de Salida : <?=$horaSalida?></td>
      </tr>
    </table>
+
+
 </body>
 
 </html>
